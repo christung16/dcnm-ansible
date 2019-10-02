@@ -1,15 +1,25 @@
 # Cisco DCNM Ansible Module
 
-## Installation
+## Pre-requisite
 
 Ansible must be installed. 
 
-Clone this repository:
+Clone the repository from Chris Gascoigne:
 ```
 git clone https://github.com/cgascoig/dcnm-ansible
 ```
+I leverage Chris's dcnm-ansible module to complete the work
 
 ## Usage
+Create the dcnm ip and login variable in overlay_network_operations/vars/main.yml:
+
+---
+# vars file for dcnm
+baseurl: https://<dcnm-ip>/rest
+username: admin
+password: "cisco"
+
+
 
 Create a playbook, like this example:
 
@@ -18,71 +28,21 @@ Create a playbook, like this example:
 ---
 - name: test dcnm module
   hosts: localhost
+  connection: local
+  gather_facts: no
   vars:
-    api_info: &api_info
-      baseurl: https://10.67.28.160/rest
-      username: admin
-      password: "C1sco123!!"
-      verify: no
-  tasks:
-    - name: dcnm_facts
-      dcnm_facts:
-        <<: *api_info
+    fabric_name: "Demo1"
+    network_name: "MyNetwork_30003"
+    vrf_name: "MyVRF_50000"
+    network_id: "32003"
+    gateway_ip: "192.168.40.254/24"
+    vlan_id: "2303"
+    switch_ports: "Ethernet1/6"
+    state: "absent"
 
-    - name: output fabrics
-      debug:
-        msg: "Fabric name: {{ item.fabricName }}"
-      loop: "{{ ansible_facts.dcnm_fabrics }}"
+  roles:
+    - overlay_network_operations
 
-    - name: create/update VRF
-      dcnm_vrf:
-        <<: *api_info
-        fabric_name: test
-        vrf_name: MyVRF_50001
-        vrf_template_config: 
-          nveId: "1"
-          vrfVlanId: "3"
-          asn: "65500"
-          vrfName: "MyVRF_50001"
-          vrfSegmentId: "50001"
-        vrf_id: 50001
-        state: present
-
-    - name: create/update network
-      dcnm_network:
-        <<: *api_info
-        fabric_name: test
-        network_name: "MyNetwork_30000"
-        vrf_name: MyVRF_50001
-        network_id: 30000
-        network_template_config:
-          mcastGroup: "239.1.1.0"
-          vrfName: "MyVRF_50001"
-          nveId: "1"
-          gatewayIpAddress: "10.3.3.1/24"
-          segmentId: "30000"
-          intfDescription: ""
-          vlanName: ""
-          secondaryGW1: ""
-          secondaryGW2: ""
-          vlanId: "300"
-          networkName: "MyNetwork_30000"
-          suppressArp: "true"
-          isLayer2Only: "false"
-          # mtu: ""
-          # dhcpServerAddr1: ""
-          # dhcpServerAddr2: ""
-          # rtBothAuto: "false"
-          # loopbackId: ""
-          # gatewayIpV6Address: ""
-          # vrfDhcp: ""
-          # enableL3OnBorder: "false"
-          # tag: "12345"
-          # enableIR: "false"
-          # trmEnabled: "false"
-        state: present
-
-```
 
 The Ansible modules closely mirror the DCNM REST API for top-down network provisioning so look at the API documentation for more details on the parameters: https://<DCNM_IP>/api-docs/
 

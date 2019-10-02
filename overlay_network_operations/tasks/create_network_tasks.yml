@@ -1,0 +1,6 @@
+---
+- set_fact:
+    deployment: true
+- include_tasks: create_network.yml
+- include_tasks: attach_network_to_leaf.yml
+- include_tasks: deploy_network.yml

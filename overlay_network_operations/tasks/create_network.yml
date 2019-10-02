@@ -1,0 +1,27 @@
+---
+- name: create/update network
+  dcnm_network:
+    baseurl: "{{ baseurl }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    verify: no
+    fabric_name: "{{ fabric_name }}"
+    network_name: "{{ network_name }}"
+    vrf_name: "{{ vrf_name }}"
+    network_id: "{{ network_id }}"
+    network_template_config:
+      mcastGroup: "239.1.1.0"
+      vrfName: "{{ vrf_name }}"
+      nveId: "1"
+      gatewayIpAddress: "{{ gateway_ip }}"
+      segmentId: "{{ network_id }}"
+      intfDescription: ""
+      vlanName: ""
+      secondaryGW1: ""
+      secondaryGW2: ""
+      vlanId: "{{ vlan_id }}"
+      networkName: "{{ network_name }}"
+      suppressArp: "true"
+      isLayer2Only: "false"
+      tag: "12345"
+    state: "{{ state }}"

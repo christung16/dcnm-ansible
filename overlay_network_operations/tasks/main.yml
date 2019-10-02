@@ -1,0 +1,8 @@
+---
+# tasks file for dcnm-28lab
+
+- include_tasks: create_network_tasks.yml
+  when:  state=="present"
+
+- include_tasks: delete_network_tasks.yml
+  when: state=="absent"

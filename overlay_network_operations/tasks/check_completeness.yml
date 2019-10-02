@@ -1,0 +1,13 @@
+---
+- name: Check completeness of the detach ports
+  dcnm_api:
+    baseurl: "{{ baseurl }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    verify: no
+    method: GET
+    endpoint: "/top-down/fabrics/{{ fabric_name }}/networks/{{ network_name }}/attachments"
+  register: result
+  until: result|json_query('response[?switchName==`N93-1`].lanAttachState|[0]') == "NA"
+  retries: 5
+  delay: 2

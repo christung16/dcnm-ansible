@@ -1,0 +1,11 @@
+---
+- name: deploy network to leaf ports
+  dcnm_api:
+    baseurl: "{{ baseurl }}"
+    username: "{{ username }}"
+    password: "{{ password }}"
+    verify: no
+    method: POST
+    endpoint: "/top-down/fabrics/{{ fabric_name }}/networks/deployments"
+    json:
+      networkNames: "{{ network_name }}"

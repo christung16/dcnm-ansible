@@ -1,0 +1,9 @@
+---
+- set_fact:
+    deployment: false
+- include_tasks: attach_network_to_leaf.yml
+- include_tasks: deploy_network.yml
+  #- pause:
+  #    seconds: 5
+- include_tasks: check_completeness.yml
+- include_tasks: create_network.yml

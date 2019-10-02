@@ -1,0 +1,36 @@
+---
+  - name: attach network to leaf ports
+    dcnm_api:
+      baseurl: "{{ baseurl }}"
+      username: "{{ username }}"
+      password: "{{ password }}"
+      verify: no
+      method: POST
+      endpoint: "/top-down/fabrics/{{ fabric_name }}/networks/attachments"
+      json:
+        - networkName: "{{ network_name }}"
+          lanAttachList:
+            - fabric: "{{ fabric_name }}"
+              networkName: "{{ network_name }}"
+              serialNumber: "FDO21010YDQ"
+              switchPorts: "{{ switch_ports }}"
+              detachSwitchPorts: ""
+              vlan: "{{ vlan_id }}"
+              dot1QVlan: "{{ vlan_id }}"
+              untagged: false
+              deployment: "{{ deployment }}"
+              extensionValues: ""
+              instanceValues: ""
+              freeformConfig: ""
+            - fabric: "{{ fabric_name }}"
+              networkName: "{{ network_name }}"
+              serialNumber: "FDO205209Q2"
+              switchPorts: "{{ switch_ports }}"
+              detachSwitchPorts: ""
+              vlan: "{{ vlan_id }}"
+              dot1QVlan: "{{ vlan_id }}"
+              untagged: false
+              deployment: "{{ deployment }}"
+              extensionValues: ""
+              instanceValues: ""
+              freeformConfig: ""

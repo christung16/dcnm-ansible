@@ -1,0 +1,17 @@
+---
+- name: test dcnm module
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    fabric_name: "Demo1"
+    network_name: "MyNetwork_30003"
+    vrf_name: "MyVRF_50000"
+    network_id: "32003"
+    gateway_ip: "192.168.40.254/24"
+    vlan_id: "2303"
+    switch_ports: "Ethernet1/6"
+    state: "present"
+  
+  roles:
+    - overlay_network_operations
